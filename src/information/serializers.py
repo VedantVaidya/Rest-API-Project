@@ -13,3 +13,9 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Book
         fields = ['id','title','page_no','author']
+
+
+class MailSerializer(serializers.Serializer):
+    to = serializers.CharField()
+    subject = serializers.CharField()
+    body = serializers.CharField()

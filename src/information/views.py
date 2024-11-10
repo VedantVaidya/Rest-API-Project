@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import ListAPIView,ListCreateAPIView, CreateAPIView
 from .models import Book, Author
 from information import serializers, services
-
+from rest_framework.response import Response
 
 class BookListAPIView(ListAPIView):
     queryset = Book.objects.select_related()
@@ -23,7 +23,9 @@ class SendMailAPIView(CreateAPIView):
         to=request.data.get("to")
         subject=request.data.get("subject")
         body=request.data.get("body")
-        return services.send_mail_func(to,subject,body)
+        services.send_mail_func.delay(to,subject,body)
+        return Response({"detail":"Mail has been sent"})
+        
         
 
 

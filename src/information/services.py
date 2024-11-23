@@ -11,3 +11,13 @@ def send_mail_func(self,to,subject,body):
         message=body,
         from_email=settings.EMAIL_HOST_USER
     )
+
+
+@shared_task(bind=True)
+def schedule_mail_func(self):
+    send_mail(
+        recipient_list=["vawaceb888@lineacr.com"],
+        subject="Hello",
+        message="THIS is my body",
+        from_email=settings.EMAIL_HOST_USER
+    )
